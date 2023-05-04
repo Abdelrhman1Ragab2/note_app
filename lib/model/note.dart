@@ -11,16 +11,16 @@ class Note extends HiveObject{
   @HiveField(1)
   final String title;
   @HiveField(2)
-  final String creationDate;
-  @HiveField(3)
   final String lastUpdate;
-  @HiveField(4)
+  @HiveField(3)
   final String content;
-  @HiveField(5)
+  @HiveField(4)
   final String coverImageUrl;
+  @HiveField(5)
+  final bool isDefaultImage;
 
    Note(
-      {required this.id,required this.title, required this.creationDate, required this.lastUpdate,
+      {required this.id,required this.title, required this.isDefaultImage, required this.lastUpdate,
         required this.content, required this.coverImageUrl});
 
 
