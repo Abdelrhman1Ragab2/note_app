@@ -16,17 +16,19 @@ class FolderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isWindows ? buildBodyWindows(context) :
-    buildBodyForMobile(context);
+    List<dynamic> folderList= Provider.of<FolderProvider>(context,listen: false).getFolders();
+    return Platform.isWindows ? buildBodyWindows(context,folderList) :
+    buildBodyForMobile(context,folderList);
   }
 
 
 
-  Widget buildBodyWindows(BuildContext ctx){
+  Widget buildBodyWindows(BuildContext ctx,folders){
+    print(folders.length);
     return
       GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 6,
+          crossAxisCount: 4,
 
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
@@ -34,25 +36,27 @@ class FolderScreen extends StatelessWidget {
 
         ),
         itemBuilder: (context,index){
-          return folderBody(context,Provider.of<FolderProvider>(ctx,listen: false).getFolders()[index],index);
+          return folderBody(context,folders[index]);
 
         },
-        itemCount: Provider.of<FolderProvider>(ctx).getFolders().length,
+        itemCount: folders.length,
         padding: const EdgeInsets.all(10),
         shrinkWrap: true,
       );
 
   }
 
-  Widget buildBodyForMobile(BuildContext context){
+  Widget buildBodyForMobile(BuildContext context,folders){
     return
-      ListView.separated(itemBuilder: (context,index)=>folderBody(context,Provider.of<FolderProvider>(context).getFolders()[index],index),
+      ListView.separated(itemBuilder: (context,index)=>folderBody(context,folders[index]),
         separatorBuilder: (_,__)=>const SizedBox(height: 5),
-        itemCount: Provider.of<FolderProvider>(context).getFolders().length,
+        itemCount: folders.length,
       );
   }
 
-  Widget folderBody(BuildContext context,Folder folder,int index){
+  Widget folderBody(BuildContext context,Folder folder){
+    print("i her ${folder.name}");
+
     return InkWell(
         onTap: (){
           Navigator.pushNamed(context, DocumentationScreen.routeName,arguments: {
@@ -90,9 +94,7 @@ class FolderScreen extends StatelessWidget {
         height: 50,
         padding: const EdgeInsets.all(8.0),
         color: Colors.black54,
-        child:
-        Expanded(
-            flex:5,child: titleAndContentBody(folder))
+        child: titleAndContentBody(folder)
     );
   }
 

@@ -9,12 +9,12 @@ class Document extends HiveObject{
   @HiveField(0)
   final String filePath;
   @HiveField(1)
-  final String folderNamePath;
+  final String folderName;
   @HiveField(2)
   final int id;
 
 
-  Document({required this.filePath,required this.folderNamePath,required this.id});
+  Document({required this.filePath,required this.folderName,required this.id});
 
 
 

@@ -109,10 +109,11 @@ class _NotesState extends State<Notes> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Expanded(flex: 1,
-              child: dateBody(DateTime.now())),
           Expanded(
-              flex:5,child: titleAndContentBody(note.title,note.content))
+              flex:5,child: titleAndContentBody(note.title,note.content)),
+          Expanded(flex: 1,
+              child: dateBody(DateTime.parse(note.lastUpdate))),
+
         ],
       ),
     );
@@ -144,11 +145,13 @@ class _NotesState extends State<Notes> {
   }
 
   Widget titleBody(String title){
-    return  myText(title,size: 18);
+    return  SizedBox(
+        height :20,child: myText(title,size: 18));
   }
 
   Widget subTitleBody(String content){
-    return myText(content,size: 14);
+    return SizedBox(
+        height :20,child: myText(content,size: 14));
   }
 
 }

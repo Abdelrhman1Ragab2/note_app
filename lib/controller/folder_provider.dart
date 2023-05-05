@@ -30,7 +30,9 @@ class FolderProvider with ChangeNotifier {
   }
 
   List<dynamic> getFolders() {
+
     return folderBox.values.toList();
+
   }
 
   Future<void> updateFolder(Folder folder) async {

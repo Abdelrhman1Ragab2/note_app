@@ -18,7 +18,7 @@ class DocumentAdapter extends TypeAdapter<Document> {
     };
     return Document(
       filePath: fields[0] as String,
-      folderNamePath: fields[1] as String,
+      folderName: fields[1] as String,
       id: fields[2] as int,
     );
   }
@@ -30,7 +30,7 @@ class DocumentAdapter extends TypeAdapter<Document> {
       ..writeByte(0)
       ..write(obj.filePath)
       ..writeByte(1)
-      ..write(obj.folderNamePath)
+      ..write(obj.folderName)
       ..writeByte(2)
       ..write(obj.id);
   }

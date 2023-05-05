@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:note/core/const/app_constant.dart';
+import 'package:note/core/const/folder_type.dart';
 import 'package:note/model/document.dart';
 
 class DocumentProvider with ChangeNotifier{
@@ -15,7 +16,7 @@ class DocumentProvider with ChangeNotifier{
   async{
 
     int key=await documentBox.add(AppConstant.myDocument);
-    Document document=Document(id: key,filePath: filePath, folderNamePath: folderPath);
+    Document document=Document(id: key,filePath: filePath, folderName: folderPath);
     await documentBox.put(key, document);
     notifyListeners();
   }
@@ -29,7 +30,7 @@ class DocumentProvider with ChangeNotifier{
   List<dynamic> getDocumentsByFolderKey(String folderKey) {
     List<dynamic> docs=[];
       documentBox.values.toList().forEach((element) {
-       if(folderKey==element.folderNamePath){
+       if(folderKey==element.folderName){
          docs.add(element);
        }
 
@@ -42,11 +43,12 @@ class DocumentProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<String?> getFilePath()async{
+  Future<String?> getFilePath(FolderType folderType)async{
+    FileType fileType=convertFolderTypeToFileType(folderType);
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         dialogTitle: "choseFile",
-        type: FileType.video,
+        type: fileType,
         allowedExtensions: ["jpg"]
 
       );

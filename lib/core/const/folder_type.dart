@@ -1,5 +1,7 @@
 
 
+import 'package:file_picker/file_picker.dart';
+
 enum FolderType {image,txt,exel,audio,video}
 
 
@@ -39,5 +41,22 @@ FolderType convertStringToFolderType(String string){
   }
   return FolderType.txt;
 
+}
+
+FileType convertFolderTypeToFileType(FolderType folderType){
+
+  switch(folderType){
+    case FolderType.txt:
+      return FileType.any;
+    case FolderType.video:
+      return FileType.video;
+    case FolderType.audio:
+      return FileType.audio;
+    case FolderType.image:
+      return FileType.image;
+    case FolderType.exel:
+      return FileType.any;
+
+  }
 
 }

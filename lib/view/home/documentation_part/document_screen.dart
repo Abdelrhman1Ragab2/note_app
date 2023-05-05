@@ -6,6 +6,7 @@ import 'package:note/core/const/folder_type.dart';
 import 'package:note/model/document.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/widget/image_dialog.dart';
 import '../../../core/widget/my_text.dart';
 
 class DocumentationScreen extends StatelessWidget {
@@ -19,29 +20,32 @@ class DocumentationScreen extends StatelessWidget {
     final String folderName = routeArg["folderName"];
     final FolderType folderType = routeArg["folderType"];
     return Scaffold(
-      appBar: AppBar(title: myText(folderName),centerTitle: true,),
-      floatingActionButton: FloatingActionButton(
-        elevation: 10,
-          onPressed: ()async{
-
-              String? filePath = await  Provider.of<DocumentProvider>(context,listen: false).getFilePath();
-
-              if(filePath!=null ){
-                await Provider.of<DocumentProvider>(context,listen: false).putDocument(filePath,folderName);
-              }
-              else{
-                print("file not select");
-            }
-
-          },child:const Icon(Icons.upload)
+      appBar: AppBar(
+        title: myText(folderName),
+        centerTitle: true,
       ),
+      floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          onPressed: () async {
+            String? filePath =
+                await Provider.of<DocumentProvider>(context, listen: false)
+                    .getFilePath(folderType);
+
+            if (filePath != null) {
+              await Provider.of<DocumentProvider>(context, listen: false)
+                  .putDocument(filePath, folderName);
+            } else {
+            }
+          },
+          child: const Icon(Icons.upload)),
       body: Platform.isWindows
-          ? buildBodyWindows(context, folderName)
-          : buildBodyForMobile(context, folderName),
+          ? buildBodyWindows(context, folderName, folderType)
+          : buildBodyForMobile(context, folderName, folderType),
     );
   }
 
-  Widget buildBodyWindows(BuildContext ctx, String folderName) {
+  Widget buildBodyWindows(
+      BuildContext ctx, String folderName, FolderType folderType) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 6,
@@ -54,7 +58,8 @@ class DocumentationScreen extends StatelessWidget {
             context,
             Provider.of<DocumentProvider>(ctx, listen: false)
                 .getDocumentsByFolderKey(folderName)[index],
-            index);
+            index,
+            folderType);
       },
       itemCount: Provider.of<DocumentProvider>(ctx)
           .getDocumentsByFolderKey(folderName)
@@ -64,52 +69,71 @@ class DocumentationScreen extends StatelessWidget {
     );
   }
 
-  Widget buildBodyForMobile(BuildContext context, String folderKey) {
+  Widget buildBodyForMobile(
+      BuildContext context, String folderName, FolderType folderType) {
     return ListView.separated(
       itemBuilder: (context, index) => documentBody(
           context,
           Provider.of<DocumentProvider>(context)
-              .getDocumentsByFolderKey(folderKey)[index],
-          index),
+              .getDocumentsByFolderKey(folderName)[index],
+          index,
+          folderType),
       separatorBuilder: (_, __) => const SizedBox(height: 5),
       itemCount: Provider.of<DocumentProvider>(context)
-          .getDocumentsByFolderKey(folderKey)
+          .getDocumentsByFolderKey(folderName)
           .length,
     );
   }
 
-  Widget documentBody(BuildContext context, Document document, int index) {
+  Widget documentBody(BuildContext context, Document document, int index,
+      FolderType folderType) {
     return InkWell(
-        onTap: () {
-          // do later
-        },
-        child: Card(elevation: 20, child: infoBody(context, document)));
-  }
+      onTap: () {
+        if(folderType==FolderType.image)
+          {
+            showDialog(context: context, builder: (context){
+              return ImageDialog(imagePath: document.filePath);
+            });
+          }
 
-  Widget infoBody(BuildContext context, Document document) {
-    return Container(
-        height: 85,
-        padding: const EdgeInsets.all(8.0),
-        color: Theme.of(context).secondaryHeaderColor,
-        child: Expanded(flex: 5, child: titleAndContentBody(document)));
-  }
-
-  Widget titleAndContentBody(Document document) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        titleBody(document.folderNamePath),
-        subTitleBody(document.filePath),
-      ],
+        // do later
+      },
+      child: imageCoverDocumentBody(folderType, document.filePath),
     );
   }
 
-  Widget titleBody(String title) {
-    return myText(title, size: 18);
-  }
-
-  Widget subTitleBody(String content) {
-    return myText(content, size: 14);
+  Widget imageCoverDocumentBody(FolderType folderType, String imagePath) {
+    switch (folderType) {
+      case FolderType.audio:
+        return Image.asset(
+          "assets/images/folder.jpg",
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        );
+      case FolderType.video:
+        return Image.asset(
+          "assets/images/video.jpg",
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        );
+      case FolderType.txt:
+        return Image.asset(
+          "assets/images/txt.jpg",
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        );
+      case FolderType.exel:
+        return Image.asset(
+          "assets/images/exel.jpg",
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        );
+      case FolderType.image:
+        return Image.file(
+          File(imagePath),
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        );
+    }
   }
 }

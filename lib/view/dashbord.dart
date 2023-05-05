@@ -16,11 +16,11 @@ class DashBord extends StatelessWidget {
   Widget build(BuildContext context) {
     int currentIndex = Platform.isAndroid?Provider.of<BottomProvider>(context).currentIndex:Provider.of<MenuProvider>(context).menusSelectedIndex;
     return Scaffold(
-      appBar: AppBar(
+      appBar: Platform.isAndroid?AppBar(
         actions: [IconButton(onPressed: (){
           Provider.of<FolderProvider>(context,listen: false).clearBox();
         }, icon: const Icon(Icons.clear))],
-      ),
+      ):null,
 
       bottomNavigationBar: Platform.isAndroid
           ? BottomNavigationBar(
