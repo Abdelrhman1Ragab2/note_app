@@ -4,7 +4,7 @@ import 'package:note/controller/folder_provider.dart';
 import 'package:note/core/const/folder_type.dart';
 import 'package:provider/provider.dart';
 
-import 'my_text.dart';
+import '../my_text.dart';
 
 class FolderDialog extends StatelessWidget {
   final String title;

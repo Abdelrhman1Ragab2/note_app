@@ -4,7 +4,7 @@ import 'package:note/core/const/app_constant.dart';
 import 'package:note/core/widget/my_text.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/note_provider.dart';
+import '../../../controller/note_provider.dart';
 
 class NoteDialog extends StatelessWidget {
   final String title;

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note/controller/document_provider.dart';
 import 'package:note/controller/folder_provider.dart';
-import 'package:note/core/widget/document_dialog.dart';
+import 'package:note/core/widget/dialog/document_dialog.dart';
 import 'package:note/view/home/notes_part/editing.dart';
 import 'package:provider/provider.dart';
 

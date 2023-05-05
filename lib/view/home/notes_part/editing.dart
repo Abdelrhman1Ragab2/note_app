@@ -10,8 +10,8 @@ import 'package:note/core/const/app_constant.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/note_provider.dart';
-import '../../../core/widget/document_dialog.dart';
-import '../../../core/widget/noteDialog.dart';
+import '../../../core/widget/dialog/document_dialog.dart';
+import '../../../core/widget/dialog/noteDialog.dart';
 import '../../../core/widget/my_text.dart';
 import '../../../model/note.dart';
 

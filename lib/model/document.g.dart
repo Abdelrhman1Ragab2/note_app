@@ -20,19 +20,22 @@ class DocumentAdapter extends TypeAdapter<Document> {
       filePath: fields[0] as String,
       folderName: fields[1] as String,
       id: fields[2] as int,
+      fileName: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Document obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.filePath)
       ..writeByte(1)
       ..write(obj.folderName)
       ..writeByte(2)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(3)
+      ..write(obj.fileName);
   }
 
   @override

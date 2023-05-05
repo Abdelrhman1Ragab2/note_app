@@ -13,6 +13,6 @@ class AppConstant{
 
  /// default box
   static  Note myNote =  Note(id: "fake", title: "title", isDefaultImage: true, lastUpdate: "lastUpdate", content: "content", coverImageUrl: "coverImageUrl");
-  static Document myDocument=Document(id: 999,filePath: "path", folderName: "path");
+  static Document myDocument=Document(id: 999,filePath: "path", folderName: "path",fileName: "fake");
   static Folder myFolder=Folder(id: 999,name: "path", type: "path");
 }

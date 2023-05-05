@@ -6,7 +6,7 @@ import 'package:note/core/const/folder_type.dart';
 import 'package:note/model/document.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/widget/image_dialog.dart';
+import '../../../core/widget/dialog/image_dialog.dart';
 import '../../../core/widget/my_text.dart';
 
 class DocumentationScreen extends StatelessWidget {
@@ -27,13 +27,13 @@ class DocumentationScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           elevation: 10,
           onPressed: () async {
-            String? filePath =
+            List<String?>? fileData =
                 await Provider.of<DocumentProvider>(context, listen: false)
                     .getFilePath(folderType);
 
-            if (filePath != null) {
+            if ( fileData != null) {
               await Provider.of<DocumentProvider>(context, listen: false)
-                  .putDocument(filePath, folderName);
+                  .putDocument(fileData[0]!,fileData[1]!, folderName);
             } else {
             }
           },
@@ -89,16 +89,22 @@ class DocumentationScreen extends StatelessWidget {
       FolderType folderType) {
     return InkWell(
       onTap: () {
-        if(folderType==FolderType.image)
-          {
-            showDialog(context: context, builder: (context){
-              return ImageDialog(imagePath: document.filePath);
-            });
-          }
-
+               Provider.of<DocumentProvider>(context,listen: false).onTabDocument(context, document, folderType);
         // do later
       },
-      child: imageCoverDocumentBody(folderType, document.filePath),
+      onDoubleTap: (){
+        Provider.of<DocumentProvider>(context,listen: false).onDoubleTabDocument(context, document, folderType);
+
+      },
+      child: Column(
+        children: [
+          SizedBox(
+            height: 125,
+              width: 125,
+              child: imageCoverDocumentBody(folderType, document.filePath)),
+          Text(document.fileName??"new doc"),
+        ],
+      ),
     );
   }
 
@@ -106,9 +112,9 @@ class DocumentationScreen extends StatelessWidget {
     switch (folderType) {
       case FolderType.audio:
         return Image.asset(
-          "assets/images/folder.jpg",
+          "assets/images/aduio.jpg",
           width: double.maxFinite,
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
         );
       case FolderType.video:
         return Image.asset(

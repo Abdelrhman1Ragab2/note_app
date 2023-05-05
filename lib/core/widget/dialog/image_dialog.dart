@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'my_text.dart';
+import '../my_text.dart';
 
 class ImageDialog extends StatelessWidget {
   final String imagePath;
