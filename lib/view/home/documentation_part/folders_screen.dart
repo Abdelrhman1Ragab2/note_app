@@ -32,7 +32,7 @@ class FolderScreen extends StatelessWidget {
 
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
-          mainAxisExtent: 150,
+          mainAxisExtent: 200,
 
         ),
         itemBuilder: (context,index){

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:note/view/home/notes_part/editing.dart';
 
 import 'dashbord.dart';
+import 'home/day_summary_part/day_labels.dart';
 import 'home/documentation_part/document_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -32,10 +33,11 @@ class MyApp extends StatelessWidget {
       routes: {
         EditingPage.routeName:(context)=>EditingPage(),
         DocumentationScreen.routeName:(context)=>const DocumentationScreen(),
+        DayLabels.routeName:(context)=>const DayLabels(),
 
       },
 
-      home: DashBord(),
+      home: const DashBord(),
     );
   }
 }
