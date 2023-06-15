@@ -17,21 +17,17 @@ class FloatingFunction {
         break;
       case 1:
         daySummaryButton(context);
-        print("d");
 
         break;
       case 2:
         noteButton(context);
-        print("n");
 
         break;
       case 3:
         planButton(context);
-        print("p");
         break;
       case 4:
         await folderButton(context);
-        print("iam in folder");
         break;
 
 

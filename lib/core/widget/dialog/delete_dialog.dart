@@ -10,10 +10,11 @@ import '../my_text.dart';
 class DeleteDialog extends StatelessWidget {
   final String title;
   final String contentMessage;
-  final int documentId;
+  final int itemId;
+  final String deletedItem;
 
   const DeleteDialog(
-      {Key? key, required this.title, required this.contentMessage,required this.documentId})
+      {Key? key, required this.title, required this.contentMessage,required this.itemId,required this.deletedItem})
       : super(key: key);
 
   @override
@@ -44,6 +45,7 @@ class DeleteDialog extends StatelessWidget {
         onPressed: () async {
           await onSave(context);
           Navigator.pop(context);
+
         },
         child: myText(
           "Delete",
@@ -71,7 +73,14 @@ class DeleteDialog extends StatelessWidget {
   }
 
   Future<void> onSave(BuildContext context)async{
-   await Provider.of<DocumentProvider>(context,listen: false).deleteDocumentByKey(documentId);
+    switch(deletedItem){
+      case "Folder":
+        await Provider.of<FolderProvider>(context,listen: false).deleteFolderByKey(itemId);
+        break;
+      case "Document":
+        await Provider.of<DocumentProvider>(context,listen: false).deleteDocumentByKey(itemId);
+        break;
+    }
 
   }
 

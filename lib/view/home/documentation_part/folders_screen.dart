@@ -5,6 +5,7 @@ import 'package:note/controller/folder_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/const/folder_type.dart';
+import '../../../core/widget/dialog/delete_dialog.dart';
 import '../../../core/widget/my_text.dart';
 import '../../../model/folders.dart';
 import 'document_screen.dart';
@@ -16,7 +17,7 @@ class FolderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> folderList= Provider.of<FolderProvider>(context,listen: false).getFolders();
+    List<dynamic> folderList= Provider.of<FolderProvider>(context).folderBox.values.toList();
     return Platform.isWindows ? buildBodyWindows(context,folderList) :
     buildBodyForMobile(context,folderList);
   }
@@ -62,7 +63,20 @@ class FolderScreen extends StatelessWidget {
             "folderType":convertStringToFolderType(folder.type),
 
           });
-          // do later
+
+        },
+        onDoubleTap: (){
+          showDialog(
+              context: context,
+              builder: (context) {
+                return DeleteDialog(
+                  contentMessage:
+                  "Are you sure you want to delete ${folder.name}",
+                  itemId: folder.id,
+                  title: 'Delete folder',
+                  deletedItem: "Folder",
+                );
+              });
         },
         child: Card(
             elevation: 20,

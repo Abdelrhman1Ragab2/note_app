@@ -124,8 +124,9 @@ class DocumentProvider with ChangeNotifier {
           return DeleteDialog(
             contentMessage:
                 "Are you sure you want to delete ${document.fileName}",
-            documentId: document.id,
+            itemId: document.id,
             title: 'Delete Document',
+            deletedItem: "Document",
           );
         });
   }

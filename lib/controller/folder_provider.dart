@@ -38,4 +38,11 @@ class FolderProvider with ChangeNotifier {
   Future<void> updateFolder(Folder folder) async {
     await folderBox.put(folder.id, folder);
   }
+  Future<void> deleteFolderByKey(int key) async {
+    await folderBox.delete(key);
+    notifyListeners();
+  }
+  updateScreen(){
+    notifyListeners();
+  }
 }
