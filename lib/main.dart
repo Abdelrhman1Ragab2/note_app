@@ -9,6 +9,7 @@ import 'package:note/view/my_app.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/bottom_provider.dart';
+import 'controller/documents/audio_provider.dart';
 import 'controller/folder_provider.dart';
 import 'controller/menu_provider.dart';
 import 'controller/note_provider.dart';
@@ -26,6 +27,7 @@ void main() async{
             ChangeNotifierProvider<MenuProvider>(create: (_)=>MenuProvider()),
             ChangeNotifierProvider<DocumentProvider>(create: (_)=>DocumentProvider()),
             ChangeNotifierProvider<FolderProvider>(create: (_)=>FolderProvider()),
+            ChangeNotifierProvider<AudioProvider>(create: (_)=>AudioProvider()),
           ],
 
           child:const MyApp()
@@ -37,7 +39,6 @@ void main() async{
 
 Future<void> appInti()async{
   await Hive.initFlutter();
-
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(DocumentAdapter());
   Hive.registerAdapter(FolderAdapter());

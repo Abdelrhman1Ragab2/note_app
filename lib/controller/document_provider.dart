@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,13 @@ import 'package:note/core/const/folder_type.dart';
 import 'package:note/core/widget/dialog/delete_dialog.dart';
 import 'package:note/model/document.dart';
 
+import '../core/widget/dialog/audio_dialog.dart';
 import '../core/widget/dialog/image_dialog.dart';
+import 'documents/audio_provider.dart';
 
 class DocumentProvider with ChangeNotifier {
+
+
   Box documentBox = Hive.box(AppConstant.fileBox);
 
   Future<void> putDocument(
@@ -72,7 +77,7 @@ class DocumentProvider with ChangeNotifier {
         // do later
         return;
       case FolderType.audio:
-        // do later
+        _onTabDocumentAudio(context,document);
         return;
       case FolderType.image:
         _onTabDocumentImage(context, document);
@@ -100,7 +105,11 @@ class DocumentProvider with ChangeNotifier {
   }
 
   _onTabDocumentAudio(BuildContext context, Document document) {
-    // do later
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AudioDialog(audioPath: document.filePath,fileName: document.fileName,audioId: document.id,);
+        });
   }
 
   _onTabDocumentExel(BuildContext context, Document document) {

@@ -85,8 +85,7 @@ class DocumentationScreen extends StatelessWidget {
     );
   }
 
-  Widget documentBody(BuildContext context, Document document, int index,
-      FolderType folderType) {
+  Widget documentBody(BuildContext context, Document document, int index, FolderType folderType) {
     return InkWell(
       onTap: () {
                Provider.of<DocumentProvider>(context,listen: false).onTabDocument(context, document, folderType);
@@ -102,7 +101,7 @@ class DocumentationScreen extends StatelessWidget {
             height: 125,
               width: 125,
               child: imageCoverDocumentBody(folderType, document.filePath)),
-          Text(document.fileName??"new doc"),
+          myText(document.fileName??"new doc",color: Colors.black),
         ],
       ),
     );

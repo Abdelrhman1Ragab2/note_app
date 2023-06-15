@@ -24,8 +24,7 @@ class FolderScreen extends StatelessWidget {
 
 
   Widget buildBodyWindows(BuildContext ctx,folders){
-    print(folders.length);
-    return
+   return
       GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
@@ -55,7 +54,6 @@ class FolderScreen extends StatelessWidget {
   }
 
   Widget folderBody(BuildContext context,Folder folder){
-    print("i her ${folder.name}");
 
     return InkWell(
         onTap: (){
@@ -91,7 +89,7 @@ class FolderScreen extends StatelessWidget {
   Widget folderNameBody(BuildContext context,Folder folder){
     return Container(
       width: double.maxFinite,
-        height: 50,
+        height: 40,
         padding: const EdgeInsets.all(8.0),
         color: Colors.black54,
         child: titleAndContentBody(folder)
