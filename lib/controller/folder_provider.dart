@@ -30,7 +30,6 @@ class FolderProvider with ChangeNotifier {
   }
 
   List<dynamic> getFolders() {
-
     return folderBox.values.toList();
 
   }
@@ -40,9 +39,6 @@ class FolderProvider with ChangeNotifier {
   }
   Future<void> deleteFolderByKey(int key) async {
     await folderBox.delete(key);
-    notifyListeners();
-  }
-  updateScreen(){
     notifyListeners();
   }
 }

@@ -10,9 +10,11 @@ import 'package:provider/provider.dart';
 
 import 'controller/bottom_provider.dart';
 import 'controller/documents/audio_provider.dart';
+import 'controller/documents/day_provider.dart';
 import 'controller/folder_provider.dart';
 import 'controller/menu_provider.dart';
 import 'controller/note_provider.dart';
+import 'model/day_summary.dart';
 import 'model/document.dart';
 import 'model/note.dart';
 
@@ -28,6 +30,7 @@ void main() async{
             ChangeNotifierProvider<DocumentProvider>(create: (_)=>DocumentProvider()),
             ChangeNotifierProvider<FolderProvider>(create: (_)=>FolderProvider()),
             ChangeNotifierProvider<AudioProvider>(create: (_)=>AudioProvider()),
+            ChangeNotifierProvider<DSummaryProvider>(create: (_)=>DSummaryProvider()),
           ],
 
           child:const MyApp()
@@ -42,10 +45,12 @@ Future<void> appInti()async{
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(DocumentAdapter());
   Hive.registerAdapter(FolderAdapter());
+  Hive.registerAdapter(DSummaryAdapter());
 
   await Hive.openBox(AppConstant.noteBox);
   await Hive.openBox(AppConstant.fileBox);
   await Hive.openBox(AppConstant.folderBox);
+  await Hive.openBox(AppConstant.dSummaryBox);
 
 }
 

@@ -1,3 +1,4 @@
+import 'package:note/model/day_summary.dart';
 import 'package:note/model/document.dart';
 import 'package:note/model/folders.dart';
 import 'package:note/model/note.dart';
@@ -7,6 +8,7 @@ class AppConstant {
   static const noteBox = "myNoteBox4";
   static const fileBox = "myFileBox";
   static const folderBox = "myFolderBox";
+  static const dSummaryBox = "mydSummaryBoxBox";
 
   static const String defaultImageURl =
       "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80";
