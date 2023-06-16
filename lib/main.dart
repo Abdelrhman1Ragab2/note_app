@@ -17,6 +17,7 @@ import 'controller/note_provider.dart';
 import 'model/day_summary.dart';
 import 'model/document.dart';
 import 'model/note.dart';
+import 'model/task.dart';
 
 void main() async{
 
@@ -46,11 +47,13 @@ Future<void> appInti()async{
   Hive.registerAdapter(DocumentAdapter());
   Hive.registerAdapter(FolderAdapter());
   Hive.registerAdapter(DSummaryAdapter());
+  Hive.registerAdapter(TaskAdapter());
 
   await Hive.openBox(AppConstant.noteBox);
   await Hive.openBox(AppConstant.fileBox);
   await Hive.openBox(AppConstant.folderBox);
   await Hive.openBox(AppConstant.dSummaryBox);
+  await Hive.openBox(AppConstant.taskBox);
 
 }
 
