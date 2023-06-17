@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 enum TaskCategory { programing, language, technological, work }
 
 String convertTaskCategoryToString(TaskCategory taskCategory) {
@@ -50,4 +53,30 @@ TaskStatus convertStringToTaskStatus(String string) {
       return TaskStatus.finished;
   }
   return TaskStatus.pending;
+}
+
+String mapTaskCategoryToAssetsPath(TaskCategory taskCategory) {
+  switch (taskCategory) {
+    case TaskCategory.language:
+      return 'assets/images/languages.png';
+    case TaskCategory.programing:
+      return 'assets/images/coding.png';
+    case TaskCategory.technological:
+      return "assets/images/technology.png";
+    case TaskCategory.work:
+      return "assets/images/work.png";
+  }
+}
+MaterialColor mapTaskStatusToColor(TaskStatus taskStatus) {
+
+  switch (taskStatus) {
+    case TaskStatus.progress:
+      return Colors.green;
+    case TaskStatus.pending:
+      return Colors.blue;
+    case TaskStatus.finished:
+      return Colors.red;
+  }
+
+
 }

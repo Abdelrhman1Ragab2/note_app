@@ -39,6 +39,7 @@ class TaskDialog extends StatelessWidget {
         color: const Color.fromRGBO(204, 10, 10, 0.9019607843137255),
         onPressed: () async {
           await onSave(context);
+          Navigator.of(context).pop();
         },
         child: myText(
           "save",
@@ -324,7 +325,7 @@ class TaskDialog extends StatelessWidget {
   Future<void> onSave(BuildContext context) async {
     final taskProvider = Provider.of<TaskProvider>(context, listen: false);
 
-   await Provider.of<TaskProvider>(context).crateTask(
+   await Provider.of<TaskProvider>(context,listen: false).crateTask(
         name: taskProvider.titleController.text,
         description: taskProvider.descriptionController.text,
         category: convertTaskCategoryToString(taskProvider.taskCategory),
