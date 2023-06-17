@@ -14,6 +14,7 @@ import 'controller/documents/day_provider.dart';
 import 'controller/folder_provider.dart';
 import 'controller/menu_provider.dart';
 import 'controller/note_provider.dart';
+import 'controller/task_provider.dart';
 import 'model/day_summary.dart';
 import 'model/document.dart';
 import 'model/note.dart';
@@ -32,6 +33,7 @@ void main() async{
             ChangeNotifierProvider<FolderProvider>(create: (_)=>FolderProvider()),
             ChangeNotifierProvider<AudioProvider>(create: (_)=>AudioProvider()),
             ChangeNotifierProvider<DSummaryProvider>(create: (_)=>DSummaryProvider()),
+            ChangeNotifierProvider<TaskProvider>(create: (_)=>TaskProvider()),
           ],
 
           child:const MyApp()
