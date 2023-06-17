@@ -7,6 +7,8 @@ import 'package:note/core/widget/dialog/document_dialog.dart';
 import 'package:note/view/home/notes_part/editing.dart';
 import 'package:provider/provider.dart';
 
+import 'dialog/task_dialog.dart';
+
 class FloatingFunction {
 
 
@@ -15,16 +17,12 @@ class FloatingFunction {
       case 0:
         overViewButton(context);
         break;
-      case 1:
-        daySummaryButton(context);
-
-        break;
+        // we don't need FloatingButton in day summary screen so we delete case:1
       case 2:
         noteButton(context);
-
         break;
       case 3:
-        planButton(context);
+        taskButton(context);
         break;
       case 4:
         await folderButton(context);
@@ -35,14 +33,17 @@ class FloatingFunction {
   }
   void overViewButton(BuildContext context){
   }
-  void daySummaryButton(BuildContext context){
 
-  }
   void noteButton(BuildContext context){
     Navigator.pushNamed(context, EditingPage.routeName,arguments: {"note":null});
 
   }
-  void planButton(BuildContext context){
+  void taskButton(BuildContext context){
+    showDialog(context: context, builder: (context){
+      return const TaskDialog(
+
+      );
+    });
 
   }
 

@@ -13,7 +13,7 @@ String convertTaskCategoryToString(TaskCategory taskCategory) {
   }
 }
 
-TaskCategory? convertStringToTaskCategory(String string) {
+TaskCategory convertStringToTaskCategory(String string) {
   switch (string) {
     case "language":
       return TaskCategory.language;
@@ -24,7 +24,7 @@ TaskCategory? convertStringToTaskCategory(String string) {
     case "work":
       return TaskCategory.work;
   }
-  return null;
+  return TaskCategory.programing;
 }
 
 enum TaskStatus { progress, pending, finished }
@@ -40,7 +40,7 @@ String convertTaskStatusToString(TaskStatus taskStatus) {
   }
 }
 
-TaskStatus? convertStringToTaskStatus(String string) {
+TaskStatus convertStringToTaskStatus(String string) {
   switch (string) {
     case "progress":
       return TaskStatus.progress;
@@ -49,5 +49,5 @@ TaskStatus? convertStringToTaskStatus(String string) {
     case "finished":
       return TaskStatus.finished;
   }
-  return null;
+  return TaskStatus.pending;
 }
