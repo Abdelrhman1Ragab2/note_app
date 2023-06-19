@@ -23,6 +23,7 @@ class TaskScreen extends StatelessWidget {
   Widget buildBodyWindows(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(child: gridViewBody(context)),
+      separatedBody(context),
       Expanded(child: chartBody(context))
     ]);
   }
@@ -50,8 +51,19 @@ class TaskScreen extends StatelessWidget {
     );
   }
 
+  Widget separatedBody(BuildContext context) {
+    return Container(
+      color: Theme.of(context).primaryColor,
+      width: 3,
+      padding: const EdgeInsets.all(12.0),
+    );
+  }
+
+
   Widget chartBody(BuildContext context) {
-    return Container();
+    return Container(
+
+    );
   }
 
   Widget buildBodyForMobile(BuildContext context) {
@@ -72,7 +84,6 @@ class TaskScreen extends StatelessWidget {
 
   Widget infoBody(Task task) {
     return Container(
-      color: Colors.blueGrey.shade200,
       height: 250,
       padding: const EdgeInsets.all(8.0),
       child: Column(
