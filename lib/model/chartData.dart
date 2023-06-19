@@ -5,5 +5,5 @@ class ChartData {
   final int percent;
   final MaterialColor color;
 
-  ChartData({required this.name, required this.percent, required this.color});
+  const ChartData({required this.name, required this.percent, required this.color});
 }

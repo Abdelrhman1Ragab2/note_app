@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-enum TaskCategory { programing, language, technological, work }
+
+enum TaskCategory { programing, language, religious , work }
 
 String convertTaskCategoryToString(TaskCategory taskCategory) {
   switch (taskCategory) {
@@ -9,8 +9,8 @@ String convertTaskCategoryToString(TaskCategory taskCategory) {
       return "language";
     case TaskCategory.programing:
       return "programing";
-    case TaskCategory.technological:
-      return "technological";
+    case TaskCategory.religious :
+      return "religious ";
     case TaskCategory.work:
       return "work";
   }
@@ -22,8 +22,8 @@ TaskCategory convertStringToTaskCategory(String string) {
       return TaskCategory.language;
     case "programing":
       return TaskCategory.programing;
-    case "technological":
-      return TaskCategory.technological;
+    case "religious ":
+      return TaskCategory.religious ;
     case "work":
       return TaskCategory.work;
   }
@@ -61,8 +61,8 @@ String mapTaskCategoryToAssetsPath(TaskCategory taskCategory) {
       return 'assets/images/languages.png';
     case TaskCategory.programing:
       return 'assets/images/coding.png';
-    case TaskCategory.technological:
-      return "assets/images/technology.png";
+    case TaskCategory.religious :
+      return "assets/images/religious.png";
     case TaskCategory.work:
       return "assets/images/work.png";
   }

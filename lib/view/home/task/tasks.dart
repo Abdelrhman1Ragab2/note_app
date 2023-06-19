@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:note/controller/note_provider.dart';
 import 'package:note/controller/task_provider.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/const/task_const.dart';
+import '../../../core/widget/dialog/task_dialog.dart';
 import '../../../core/widget/my_text.dart';
 import '../../../model/task.dart';
 
@@ -21,10 +23,12 @@ class TaskScreen extends StatelessWidget {
   }
 
   Widget buildBodyWindows(BuildContext context) {
+    Map<String,double> chartCategory= Provider.of<TaskProvider>(context,listen: false).fullCategoryChart();
+    Map<String,double> chartStatus= Provider.of<TaskProvider>(context,listen: false).fullStatusChart();
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(child: gridViewBody(context)),
       separatedBody(context),
-      Expanded(child: chartBody(context))
+      Expanded(child: chartBody(context,chartCategory,chartStatus))
     ]);
   }
 
@@ -60,9 +64,64 @@ class TaskScreen extends StatelessWidget {
   }
 
 
-  Widget chartBody(BuildContext context) {
-    return Container(
+  Widget chartBody(BuildContext context,Map<String,double> chartCategory,Map<String,double> chartStatus) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        PieChart(
+          dataMap: chartCategory,
+          animationDuration: const Duration(seconds: 2),
+          chartLegendSpacing: 16,
+          chartRadius: MediaQuery.of(context).size.width /6,
+          // colorList: colorList,
+          initialAngleInDegree: 0,
+          chartType: ChartType.disc,
+          ringStrokeWidth: 32,
+          centerText: "Category",
+          legendOptions: const LegendOptions(
+            showLegendsInRow: false,
+            legendPosition: LegendPosition.right,
+            showLegends: true,
 
+          ),
+          chartValuesOptions: const ChartValuesOptions(
+            showChartValueBackground: true,
+            showChartValues: true,
+            showChartValuesInPercentage: false,
+            showChartValuesOutside: false,
+            decimalPlaces: 1,
+          ),
+          // gradientList: ---To add gradient colors---
+          // emptyColorGradient: ---Empty Color gradient---
+        ),
+        const SizedBox(height: 50,),
+        PieChart(
+          dataMap: chartStatus,
+          animationDuration: const Duration(seconds: 2),
+          chartLegendSpacing: 16,
+          chartRadius: MediaQuery.of(context).size.width /6,
+          // colorList: colorList,
+          initialAngleInDegree: 0,
+          chartType: ChartType.disc,
+          ringStrokeWidth: 32,
+          centerText: "Status",
+          legendOptions: const LegendOptions(
+            showLegendsInRow: false,
+            legendPosition: LegendPosition.right,
+            showLegends: true,
+
+          ),
+          chartValuesOptions: const ChartValuesOptions(
+            showChartValueBackground: true,
+            showChartValues: true,
+            showChartValuesInPercentage: false,
+            showChartValuesOutside: false,
+            decimalPlaces: 1,
+          ),
+          // gradientList: ---To add gradient colors---
+          // emptyColorGradient: ---Empty Color gradient---
+        ),
+      ],
     );
   }
 
@@ -77,12 +136,18 @@ class TaskScreen extends StatelessWidget {
 
   Widget taskBody(BuildContext context, Task task, int index) {
     return InkWell(
-      onTap: () {},
-      child: Card(elevation: 20, child: infoBody(task)),
+      onTap: () {
+        showDialog(context: context, builder: (context){
+          return  TaskDialog(forEditing: true,task: task,
+
+          );
+        });
+      },
+      child: Card(elevation: 20, child: taskInfoBody(task)),
     );
   }
 
-  Widget infoBody(Task task) {
+  Widget taskInfoBody(Task task) {
     return Container(
       height: 250,
       padding: const EdgeInsets.all(8.0),
@@ -104,7 +169,7 @@ class TaskScreen extends StatelessWidget {
               ),
               Expanded(
                 flex: 4,
-                child: taskInfo(task),
+                child: taskSubInfo(task),
               ),
             ],
           ),
@@ -113,7 +178,7 @@ class TaskScreen extends StatelessWidget {
     );
   }
 
-  Widget taskInfo(Task task) {
+  Widget taskSubInfo(Task task) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,

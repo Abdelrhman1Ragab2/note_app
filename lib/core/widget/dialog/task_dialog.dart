@@ -4,12 +4,35 @@ import 'package:intl/intl.dart';
 import 'package:note/controller/task_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/task.dart';
 import '../../const/task_const.dart';
 import '../my_text.dart';
 
-class TaskDialog extends StatelessWidget {
-  const TaskDialog({Key? key}) : super(key: key);
+class TaskDialog extends StatefulWidget {
+  final bool forEditing;
+  final Task? task;
 
+  const TaskDialog({Key? key, required this.forEditing, this.task})
+      : super(key: key);
+
+  @override
+  State<TaskDialog> createState() => _TaskDialogState();
+}
+
+class _TaskDialogState extends State<TaskDialog> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.forEditing ) {
+        doInitOperation(context);
+      }
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return buildBody(context);
@@ -18,13 +41,11 @@ class TaskDialog extends StatelessWidget {
   Widget buildBody(BuildContext context) {
     return Padding(
       padding:
-      const EdgeInsets.only(left: 150, right: 150, top: 50, bottom: 50),
+          const EdgeInsets.only(left: 150, right: 150, top: 50, bottom: 50),
       child: AlertDialog(
-          backgroundColor: Theme
-              .of(context)
-              .primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           elevation: 20,
-          title: myText("New Task", size: 22),
+          title: myText(widget.forEditing ? "Edit Task" : "New Task", size: 22),
           content: contentBody(context),
           actionsAlignment: MainAxisAlignment.center,
           actions: actionBody(context)),
@@ -97,9 +118,7 @@ class TaskDialog extends StatelessWidget {
       ),
       child: TextFormField(
           style: const TextStyle(color: Colors.white),
-          controller: Provider
-              .of<TaskProvider>(context)
-              .titleController,
+          controller: Provider.of<TaskProvider>(context).titleController,
           decoration: const InputDecoration(
             hintStyle: TextStyle(color: Colors.white),
             hintText: "Task title",
@@ -116,9 +135,7 @@ class TaskDialog extends StatelessWidget {
       ),
       child: TextFormField(
           style: const TextStyle(color: Colors.white),
-          controller: Provider
-              .of<TaskProvider>(context)
-              .descriptionController,
+          controller: Provider.of<TaskProvider>(context).descriptionController,
           decoration: const InputDecoration(
             hintStyle: TextStyle(color: Colors.white),
             hintText: "Task description",
@@ -144,9 +161,7 @@ class TaskDialog extends StatelessWidget {
                       leading: Radio(
                         value: TaskCategory.programing,
                         groupValue:
-                        Provider
-                            .of<TaskProvider>(context)
-                            .taskCategory,
+                            Provider.of<TaskProvider>(context).taskCategory,
                         onChanged: (TaskCategory? value) {
                           Provider.of<TaskProvider>(context, listen: false)
                               .changeTaskCategory(value!);
@@ -161,9 +176,7 @@ class TaskDialog extends StatelessWidget {
                       leading: Radio(
                         value: TaskCategory.language,
                         groupValue:
-                        Provider
-                            .of<TaskProvider>(context)
-                            .taskCategory,
+                            Provider.of<TaskProvider>(context).taskCategory,
                         onChanged: (TaskCategory? value) {
                           Provider.of<TaskProvider>(context, listen: false)
                               .changeTaskCategory(value!);
@@ -174,13 +187,11 @@ class TaskDialog extends StatelessWidget {
                   Expanded(
                     child: ListTile(
                       title:
-                      Text(convertTaskCategoryToString(TaskCategory.work)),
+                          Text(convertTaskCategoryToString(TaskCategory.work)),
                       leading: Radio(
                         value: TaskCategory.work,
                         groupValue:
-                        Provider
-                            .of<TaskProvider>(context)
-                            .taskCategory,
+                            Provider.of<TaskProvider>(context).taskCategory,
                         onChanged: (TaskCategory? value) {
                           Provider.of<TaskProvider>(context, listen: false)
                               .changeTaskCategory(value!);
@@ -190,14 +201,12 @@ class TaskDialog extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListTile(
-                      title: Text(convertTaskCategoryToString(
-                          TaskCategory.technological)),
+                      title: Text(
+                          convertTaskCategoryToString(TaskCategory.religious)),
                       leading: Radio(
-                        value: TaskCategory.technological,
+                        value: TaskCategory.religious,
                         groupValue:
-                        Provider
-                            .of<TaskProvider>(context)
-                            .taskCategory,
+                            Provider.of<TaskProvider>(context).taskCategory,
                         onChanged: (TaskCategory? value) {
                           Provider.of<TaskProvider>(context, listen: false)
                               .changeTaskCategory(value!);
@@ -229,13 +238,11 @@ class TaskDialog extends StatelessWidget {
                   Expanded(
                     child: ListTile(
                       title:
-                      Text(convertTaskStatusToString(TaskStatus.progress)),
+                          Text(convertTaskStatusToString(TaskStatus.progress)),
                       leading: Radio(
                         value: TaskStatus.progress,
                         groupValue:
-                        Provider
-                            .of<TaskProvider>(context)
-                            .taskStatus,
+                            Provider.of<TaskProvider>(context).taskStatus,
                         onChanged: (TaskStatus? value) {
                           Provider.of<TaskProvider>(context, listen: false)
                               .changeTasStatus(value!);
@@ -246,17 +253,33 @@ class TaskDialog extends StatelessWidget {
                   Expanded(
                     child: ListTile(
                       title:
-                      Text(convertTaskStatusToString(TaskStatus.pending)),
+                          Text(convertTaskStatusToString(TaskStatus.pending)),
                       leading: Radio(
                         value: TaskStatus.pending,
                         groupValue:
-                        Provider
-                            .of<TaskProvider>(context)
-                            .taskStatus,
+                            Provider.of<TaskProvider>(context).taskStatus,
                         onChanged: (TaskStatus? value) {
                           Provider.of<TaskProvider>(context, listen: false)
                               .changeTasStatus(value!);
                         },
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.forEditing,
+                    child: Expanded(
+                      child: ListTile(
+                        title:
+                            Text(convertTaskStatusToString(TaskStatus.finished)),
+                        leading: Radio(
+                          value: TaskStatus.finished,
+                          groupValue:
+                              Provider.of<TaskProvider>(context).taskStatus,
+                          onChanged: (TaskStatus? value) {
+                            Provider.of<TaskProvider>(context, listen: false)
+                                .changeTasStatus(value!);
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -283,9 +306,7 @@ class TaskDialog extends StatelessWidget {
 
   Widget startDateBody(BuildContext context) {
     return ListTile(
-      title: Text(Provider
-          .of<TaskProvider>(context, listen: false)
-          .startDate),
+      title: Text(Provider.of<TaskProvider>(context, listen: false).startDate),
       leading: const Icon(Icons.date_range),
       onTap: () async {
         DateTime? dateTime = await timePicker(context);
@@ -299,9 +320,7 @@ class TaskDialog extends StatelessWidget {
 
   Widget endDateBody(BuildContext context) {
     return ListTile(
-      title: Text(Provider
-          .of<TaskProvider>(context, listen: false)
-          .endDate),
+      title: Text(Provider.of<TaskProvider>(context, listen: false).endDate),
       leading: const Icon(Icons.date_range),
       onTap: () async {
         DateTime? dateTime = await timePicker(context);
@@ -318,19 +337,26 @@ class TaskDialog extends StatelessWidget {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(DateTime.now().year),
-        lastDate: DateTime(DateTime.now().year+3));
+        lastDate: DateTime(DateTime.now().year + 3));
     return dateTime;
   }
 
   Future<void> onSave(BuildContext context) async {
-    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+    if (widget.forEditing) {
+      Provider.of<TaskProvider>(context, listen: false).updateTask(widget.task!.id);
+    } else {
+      await Provider.of<TaskProvider>(context, listen: false).crateTask();
+    }
+  }
 
-   await Provider.of<TaskProvider>(context,listen: false).crateTask(
-        name: taskProvider.titleController.text,
-        description: taskProvider.descriptionController.text,
-        category: convertTaskCategoryToString(taskProvider.taskCategory),
-        status: convertTaskStatusToString(taskProvider.taskStatus),
-        startDate: taskProvider.startDate,
-        endDate: taskProvider.endDate);
+  doInitOperation(BuildContext context) async{
+    await Provider.of<TaskProvider>(context, listen: false).doEditingOperation(
+      name: widget.task!.name,
+      description: widget.task!.description,
+      status: widget.task!.status,
+      category: widget.task!.category,
+      myStartDate: widget.task!.startDate,
+      myEndDate: widget.task!.endDate,
+    );
   }
 }
