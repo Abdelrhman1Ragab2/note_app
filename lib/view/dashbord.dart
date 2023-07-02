@@ -32,7 +32,7 @@ class DashBord extends StatelessWidget {
               currentIndex: currentIndex,
             )
           : null,
-      floatingActionButton:currentIndex==1?null: FloatingActionButton(
+      floatingActionButton:currentIndex==0?null: FloatingActionButton(
           onPressed: () async {
             await FloatingFunction().doOperation(currentIndex, context);
           },

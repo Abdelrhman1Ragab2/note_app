@@ -32,7 +32,6 @@ class _NotesState extends State<Notes> {
       GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
-
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
             mainAxisExtent: 200,
@@ -44,7 +43,6 @@ class _NotesState extends State<Notes> {
         },
         itemCount: Provider.of<NoteProvider>(ctx).getNotes().length,
         padding: const EdgeInsets.all(10),
-        shrinkWrap: true,
       );
 
   }

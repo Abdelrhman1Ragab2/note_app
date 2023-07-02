@@ -11,7 +11,7 @@ class DSummaryProvider with ChangeNotifier{
   TextEditingController dialogController=TextEditingController();
   Future<void> crateDSummary(String text, int day ,int month) async {
     int key = await dSummaryBox.add(null);
-    DSummary dSummary = DSummary(text:text,day:day ,month: month );
+    DSummary dSummary = DSummary(text:text,day:day ,month: month, id: key );
     await dSummaryBox.put(key, dSummary);
     dialogController.clear();
     notifyListeners();
@@ -26,6 +26,21 @@ class DSummaryProvider with ChangeNotifier{
 
   Future<void> deleteDSummaryByKey(int key) async {
     await dSummaryBox.delete(key);
+    notifyListeners();
+  }
+
+  Future<void> updateDaySummary(DSummary dSummary)async {
+
+    await dSummaryBox.put(dSummary.id, dSummary);
+    notifyListeners();
+  }
+
+
+  Future<void>doEditingOperation({
+    required String daySummary,
+
+  }) async{
+    dialogController.text=daySummary;
     notifyListeners();
   }
 

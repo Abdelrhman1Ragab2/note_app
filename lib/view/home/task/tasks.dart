@@ -214,6 +214,6 @@ class TaskScreen extends StatelessWidget {
     return Container(
         color: mapTaskStatusToColor(convertStringToTaskStatus(status)),
         padding: const EdgeInsets.all(8.0),
-        child: myText(status, size: 10, color: Colors.black));
+        child: myText(status, size: 12));
   }
 }

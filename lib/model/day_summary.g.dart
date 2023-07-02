@@ -20,19 +20,22 @@ class DSummaryAdapter extends TypeAdapter<DSummary> {
       text: fields[0] as String,
       day: fields[1] as int,
       month: fields[2] as int,
+      id: fields[3] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, DSummary obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)
       ..write(obj.day)
       ..writeByte(2)
-      ..write(obj.month);
+      ..write(obj.month)
+      ..writeByte(3)
+      ..write(obj.id);
   }
 
   @override

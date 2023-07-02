@@ -10,6 +10,8 @@ class DSummary extends HiveObject {
   int day;
   @HiveField(2)
   int month;
+  @HiveField(3)
+  int id;
 
-  DSummary({required this.text, required this.day, required this.month});
+  DSummary({required this.text, required this.day, required this.month,required this.id});
 }

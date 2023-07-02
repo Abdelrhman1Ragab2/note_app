@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
               10, 18, 60, 0.9),
         ),
         scrollbarTheme: ScrollbarThemeData(
-          thumbColor: MaterialStateProperty.all<Color>(Colors.white)
+          thumbVisibility: MaterialStateProperty.all<bool?>(true) ,
+          thumbColor: MaterialStateProperty.all<Color>(Colors.blueAccent)
         ),
         primaryColor: const Color.fromRGBO(
             47, 47, 59, 1.0),

@@ -1,17 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:note/model/day_summary.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/documents/day_provider.dart';
 import '../my_text.dart';
 
-class DSummaryDialog extends StatelessWidget {
+class DSummaryDialog extends StatefulWidget {
   final int day;
   final int month;
+  final DSummary? dSummary;
 
-  const DSummaryDialog({Key? key, required this.day, required this.month})
+  const DSummaryDialog(
+      {Key? key, required this.day, required this.month, this.dSummary})
       : super(key: key);
+
+  @override
+  State<DSummaryDialog> createState() => _DSummaryDialogState();
+}
+
+class _DSummaryDialogState extends State<DSummaryDialog> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.dSummary != null) {
+        doInitOperation(context);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +40,7 @@ class DSummaryDialog extends StatelessWidget {
   Widget buildBody(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 250, right: 250, top: 200, bottom: 150),
+      const EdgeInsets.only(left: 250, right: 250, top: 200, bottom: 150),
       child: AlertDialog(
           elevation: 20,
           title: Text(DateFormat.yMMMEd().format(DateTime.now())),
@@ -71,7 +90,9 @@ class DSummaryDialog extends StatelessWidget {
       ),
       child: TextFormField(
           style: const TextStyle(color: Colors.white),
-          controller: Provider.of<DSummaryProvider>(context).dialogController,
+          controller: Provider
+              .of<DSummaryProvider>(context)
+              .dialogController,
           decoration: const InputDecoration(
             hintStyle: TextStyle(color: Colors.white),
             hintText: "write day summary",
@@ -80,10 +101,27 @@ class DSummaryDialog extends StatelessWidget {
   }
 
   Future<void> onSave(BuildContext context) async {
-    Provider.of<DSummaryProvider>(context, listen: false).crateDSummary(
-        Provider.of<DSummaryProvider>(context,listen: false).dialogController.text,
-        day,
-        month);
+    if (widget.dSummary != null) {
+      DSummary dSummary = DSummary(text: Provider
+          .of<DSummaryProvider>(context,listen: false)
+          .dialogController
+          .text, day: widget.day, month: widget.month, id: widget.dSummary!.id);
+      Provider.of<DSummaryProvider>(context, listen: false).updateDaySummary(
+          dSummary);
+    }
+    else {
+      Provider.of<DSummaryProvider>(context, listen: false).crateDSummary(
+          Provider
+              .of<DSummaryProvider>(context, listen: false)
+              .dialogController
+              .text,
+          widget.day,
+          widget.month);
+    }
+  }
 
+  doInitOperation(BuildContext context) async {
+    await Provider.of<DSummaryProvider>(context, listen: false)
+        .doEditingOperation(daySummary: widget.dSummary!.text);
   }
 }

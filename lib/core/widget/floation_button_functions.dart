@@ -14,17 +14,14 @@ class FloatingFunction {
 
    Future<void>doOperation(int index,BuildContext context)async{
     switch(index){
-      case 0:
-        overViewButton(context);
-        break;
-        // we don't need FloatingButton in day summary screen so we delete case:1
-      case 2:
+    // we don't need FloatingButton in day summary screen so we delete case:0
+      case 1:
         noteButton(context);
         break;
-      case 3:
+      case 2:
         taskButton(context);
         break;
-      case 4:
+      case 3:
         await folderButton(context);
         break;
 
